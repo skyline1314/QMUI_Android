@@ -34,6 +34,7 @@ android {
 //            replaceTheme variant
 //        }
 //    }
+    buildToolsVersion '26.0.2'
 }
 
 //def replaceTheme(variant){
