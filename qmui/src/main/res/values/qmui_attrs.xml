@@ -69,6 +69,10 @@
 
     <!--************ QMUITopBar ***********-->
     <declare-styleable name="QMUITopBar">
+        <attr name="qmui_topbar_title_gravity" format="enum">
+            <enum name="left_center" value="19"/>
+            <enum name="center" value="17"/>
+        </attr>
         <attr name="qmui_topbar_need_separator" format="boolean"/>
         <attr name="qmui_topbar_separator_color" format="color"/>
         <attr name="qmui_topbar_separator_height" format="dimension"/>
@@ -161,6 +165,7 @@
         <attr name="qmui_max_value" format="integer"/>
         <attr name="qmui_value" format="integer"/>
         <attr name="qmui_stroke_width" format="dimension"/>
+        <attr name="qmui_stroke_round_cap" format="boolean"/>
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
     </declare-styleable>

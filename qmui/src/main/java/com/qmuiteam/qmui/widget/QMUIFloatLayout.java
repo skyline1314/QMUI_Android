@@ -1,5 +1,6 @@
 package com.qmuiteam.qmui.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -79,6 +80,7 @@ public class QMUIFloatLayout extends ViewGroup {
         array.recycle();
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -249,11 +251,8 @@ public class QMUIFloatLayout extends ViewGroup {
                 break;
             }
 
-            // 子View的最小x值
-            int childMinX = (parentWidth - getPaddingLeft() - getPaddingRight() - mWidthSumInEachLine[i]) / 2 + getPaddingLeft();
-
             // 遍历该行内的元素，布局每个元素
-            nextChildPositionX = childMinX;
+            nextChildPositionX = (parentWidth - getPaddingLeft() - getPaddingRight() - mWidthSumInEachLine[i]) / 2 + getPaddingLeft(); // 子 View 的最小 x 值
             for (int j = nextChildIndex; j < nextChildIndex + mItemNumberInEachLine[i]; j++) {
                 final View childView = getChildAt(j);
                 if (childView.getVisibility() == GONE) {
@@ -301,14 +300,15 @@ public class QMUIFloatLayout extends ViewGroup {
             }
             final int childw = child.getMeasuredWidth();
             final int childh = child.getMeasuredHeight();
-            lineHeight = Math.max(lineHeight, childh);
             if (childPositionX + childw > childMaxRight) {
+                // 换行
                 childPositionX = getPaddingLeft();
                 childPositionY += (lineHeight + mChildVerticalSpacing);
                 lineHeight = 0;
             }
             child.layout(childPositionX, childPositionY, childPositionX + childw, childPositionY + childh);
             childPositionX += childw + mChildHorizontalSpacing;
+            lineHeight = Math.max(lineHeight, childh);
         }
 
         // 如果布局的子View少于childCount，则表示有一些子View不需要布局
@@ -343,11 +343,8 @@ public class QMUIFloatLayout extends ViewGroup {
                 break;
             }
 
-            // 子View的最小x值
-            int childMinX = parentWidth - getPaddingRight() - mWidthSumInEachLine[i];
-
             // 遍历该行内的元素，布局每个元素
-            nextChildPositionX = childMinX;
+            nextChildPositionX = parentWidth - getPaddingRight() - mWidthSumInEachLine[i]; // 初始值为子 View 的最小 x 值
             for (int j = nextChildIndex; j < nextChildIndex + mItemNumberInEachLine[i]; j++) {
                 final View childView = getChildAt(j);
                 if (childView.getVisibility() == GONE) {
